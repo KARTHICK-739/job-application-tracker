@@ -1,16 +1,17 @@
-import { BriefcaseBusiness } from 'lucide-react';
-import { useState } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
-import { getErrorMessage } from '../services/api.js';
+import React from "react";
+import { BriefcaseBusiness } from "lucide-react";
+import { useState } from "react";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
+import { getErrorMessage } from "../services/api.js";
 
 const AuthPage = ({ mode }) => {
-  const isRegister = mode === 'register';
+  const isRegister = mode === "register";
   const { isAuthenticated, login, register } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (isAuthenticated) {
@@ -24,7 +25,7 @@ const AuthPage = ({ mode }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
@@ -33,7 +34,9 @@ const AuthPage = ({ mode }) => {
       } else {
         await login({ email: form.email, password: form.password });
       }
-      navigate(location.state?.from?.pathname || '/dashboard', { replace: true });
+      navigate(location.state?.from?.pathname || "/dashboard", {
+        replace: true,
+      });
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
@@ -48,33 +51,67 @@ const AuthPage = ({ mode }) => {
           <BriefcaseBusiness size={28} />
           <span>JobTrack</span>
         </div>
-        <h1>{isRegister ? 'Create your tracker account' : 'Manage every application in one place'}</h1>
+        <h1>
+          {isRegister
+            ? "Create your tracker account"
+            : "Manage every application in one place"}
+        </h1>
         <p>
-          Track roles, statuses, notes, dates, and interview progress with a private dashboard backed by your own database.
+          Track roles, statuses, notes, dates, and interview progress with a
+          private dashboard backed by your own database.
         </p>
         <form className="auth-form" onSubmit={handleSubmit}>
           {isRegister ? (
             <label>
               Name
-              <input name="name" value={form.name} onChange={updateField} required minLength="2" />
+              <input
+                name="name"
+                value={form.name}
+                onChange={updateField}
+                required
+                minLength="2"
+              />
             </label>
           ) : null}
           <label>
             Email
-            <input name="email" type="email" value={form.email} onChange={updateField} required />
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={updateField}
+              required
+            />
           </label>
           <label>
             Password
-            <input name="password" type="password" value={form.password} onChange={updateField} required minLength="6" />
+            <input
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={updateField}
+              required
+              minLength="6"
+            />
           </label>
           {error ? <div className="alert alert-error">{error}</div> : null}
-          <button className="button button-primary" type="submit" disabled={loading}>
-            {loading ? 'Please wait...' : isRegister ? 'Create account' : 'Log in'}
+          <button
+            className="button button-primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Please wait..."
+              : isRegister
+                ? "Create account"
+                : "Log in"}
           </button>
         </form>
         <p className="auth-switch">
-          {isRegister ? 'Already have an account?' : 'New here?'}{' '}
-          <Link to={isRegister ? '/' : '/register'}>{isRegister ? 'Log in' : 'Create an account'}</Link>
+          {isRegister ? "Already have an account?" : "New here?"}{" "}
+          <Link to={isRegister ? "/" : "/register"}>
+            {isRegister ? "Log in" : "Create an account"}
+          </Link>
         </p>
       </section>
       <section className="auth-aside" aria-label="Product preview">
@@ -98,4 +135,3 @@ const AuthPage = ({ mode }) => {
 };
 
 export default AuthPage;
-

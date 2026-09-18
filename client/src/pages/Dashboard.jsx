@@ -1,21 +1,30 @@
-import { Link } from 'react-router-dom';
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import StatCard from '../components/StatCard.jsx';
-import LoadingState from '../components/LoadingState.jsx';
-import ErrorState from '../components/ErrorState.jsx';
-import EmptyState from '../components/EmptyState.jsx';
-import StatusBadge from '../components/StatusBadge.jsx';
-import { getErrorMessage } from '../services/api.js';
-import { getApplicationStats } from '../services/applicationService.js';
-import { STATUSES } from '../utils/constants.js';
-import { formatDate } from '../utils/formatters.js';
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import StatCard from "../components/StatCard.jsx";
+import LoadingState from "../components/LoadingState.jsx";
+import ErrorState from "../components/ErrorState.jsx";
+import EmptyState from "../components/EmptyState.jsx";
+import StatusBadge from "../components/StatusBadge.jsx";
+import { getErrorMessage } from "../services/api.js";
+import { getApplicationStats } from "../services/applicationService.js";
+import { STATUSES } from "../utils/constants.js";
+import { formatDate } from "../utils/formatters.js";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loadStats = async () => {
@@ -37,7 +46,7 @@ const Dashboard = () => {
 
   const chartData = STATUSES.map((status) => ({
     status,
-    count: data.stats.byStatus[status] || 0
+    count: data.stats.byStatus[status] || 0,
   }));
 
   return (
@@ -55,11 +64,31 @@ const Dashboard = () => {
 
       <section className="stat-grid">
         <StatCard label="Total" value={data.stats.total} />
-        <StatCard label="Applied" value={data.stats.byStatus.Applied} tone="blue" />
-        <StatCard label="Screening" value={data.stats.byStatus.Screening} tone="violet" />
-        <StatCard label="Interviews" value={data.stats.byStatus.Interview} tone="amber" />
-        <StatCard label="Offers" value={data.stats.byStatus.Offer} tone="green" />
-        <StatCard label="Rejected" value={data.stats.byStatus.Rejected} tone="red" />
+        <StatCard
+          label="Applied"
+          value={data.stats.byStatus.Applied}
+          tone="blue"
+        />
+        <StatCard
+          label="Screening"
+          value={data.stats.byStatus.Screening}
+          tone="violet"
+        />
+        <StatCard
+          label="Interviews"
+          value={data.stats.byStatus.Interview}
+          tone="amber"
+        />
+        <StatCard
+          label="Offers"
+          value={data.stats.byStatus.Offer}
+          tone="green"
+        />
+        <StatCard
+          label="Rejected"
+          value={data.stats.byStatus.Rejected}
+          tone="red"
+        />
       </section>
 
       <section className="dashboard-grid">
@@ -88,10 +117,17 @@ const Dashboard = () => {
           {data.recentApplications.length ? (
             <div className="recent-list">
               {data.recentApplications.map((application) => (
-                <Link key={application._id} to={`/applications/${application._id}`} className="recent-item">
+                <Link
+                  key={application._id}
+                  to={`/applications/${application._id}`}
+                  className="recent-item"
+                >
                   <div>
                     <strong>{application.position}</strong>
-                    <span>{application.company} • {formatDate(application.appliedDate)}</span>
+                    <span>
+                      {application.company} •{" "}
+                      {formatDate(application.appliedDate)}
+                    </span>
                   </div>
                   <StatusBadge status={application.status} />
                 </Link>
@@ -112,4 +148,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

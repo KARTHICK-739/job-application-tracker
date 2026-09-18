@@ -1,11 +1,16 @@
-import { createContext, useContext, useMemo, useState } from 'react';
-import { getMe, login as loginRequest, register as registerRequest } from '../services/authService.js';
+import React from "react";
+import { createContext, useContext, useMemo, useState } from "react";
+import {
+  getMe,
+  login as loginRequest,
+  register as registerRequest,
+} from "../services/authService.js";
 
 const AuthContext = createContext(null);
 
 const readStoredUser = () => {
   try {
-    return JSON.parse(localStorage.getItem('jat_user')) || null;
+    return JSON.parse(localStorage.getItem("jat_user")) || null;
   } catch {
     return null;
   }
@@ -13,11 +18,11 @@ const readStoredUser = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(readStoredUser);
-  const [token, setToken] = useState(localStorage.getItem('jat_token'));
+  const [token, setToken] = useState(localStorage.getItem("jat_token"));
 
   const persistSession = ({ user: nextUser, token: nextToken }) => {
-    localStorage.setItem('jat_user', JSON.stringify(nextUser));
-    localStorage.setItem('jat_token', nextToken);
+    localStorage.setItem("jat_user", JSON.stringify(nextUser));
+    localStorage.setItem("jat_token", nextToken);
     setUser(nextUser);
     setToken(nextToken);
   };
@@ -36,14 +41,14 @@ export const AuthProvider = ({ children }) => {
 
   const refreshUser = async () => {
     const data = await getMe();
-    localStorage.setItem('jat_user', JSON.stringify(data.user));
+    localStorage.setItem("jat_user", JSON.stringify(data.user));
     setUser(data.user);
     return data.user;
   };
 
   const logout = () => {
-    localStorage.removeItem('jat_user');
-    localStorage.removeItem('jat_token');
+    localStorage.removeItem("jat_user");
+    localStorage.removeItem("jat_token");
     setUser(null);
     setToken(null);
   };
@@ -56,13 +61,12 @@ export const AuthProvider = ({ children }) => {
       login,
       register,
       logout,
-      refreshUser
+      refreshUser,
     }),
-    [user, token]
+    [user, token],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
-

@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const EmptyState = ({ title, message, actionLabel, actionTo }) => (
   <div className="empty-state">
@@ -13,4 +14,3 @@ const EmptyState = ({ title, message, actionLabel, actionTo }) => (
 );
 
 export default EmptyState;
-

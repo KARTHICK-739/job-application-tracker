@@ -1,4 +1,5 @@
-const StatCard = ({ label, value, tone = 'default' }) => (
+import React from "react";
+const StatCard = ({ label, value, tone = "default" }) => (
   <div className={`stat-card stat-${tone}`}>
     <span>{label}</span>
     <strong>{value}</strong>
@@ -6,4 +7,3 @@ const StatCard = ({ label, value, tone = 'default' }) => (
 );
 
 export default StatCard;
-

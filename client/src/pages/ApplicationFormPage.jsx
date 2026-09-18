@@ -1,11 +1,16 @@
-import { ArrowLeft } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import ApplicationForm from '../components/ApplicationForm.jsx';
-import ErrorState from '../components/ErrorState.jsx';
-import LoadingState from '../components/LoadingState.jsx';
-import { getErrorMessage } from '../services/api.js';
-import { createApplication, getApplication, updateApplication } from '../services/applicationService.js';
+import React from "react";
+import { ArrowLeft } from "lucide-react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import ApplicationForm from "../components/ApplicationForm.jsx";
+import ErrorState from "../components/ErrorState.jsx";
+import LoadingState from "../components/LoadingState.jsx";
+import { getErrorMessage } from "../services/api.js";
+import {
+  createApplication,
+  getApplication,
+  updateApplication,
+} from "../services/applicationService.js";
 
 const ApplicationFormPage = () => {
   const { id } = useParams();
@@ -14,7 +19,7 @@ const ApplicationFormPage = () => {
   const [initialValues, setInitialValues] = useState(null);
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!isEditing) return;
@@ -35,9 +40,11 @@ const ApplicationFormPage = () => {
 
   const handleSubmit = async (payload) => {
     setSaving(true);
-    setError('');
+    setError("");
     try {
-      const data = isEditing ? await updateApplication(id, payload) : await createApplication(payload);
+      const data = isEditing
+        ? await updateApplication(id, payload)
+        : await createApplication(payload);
       navigate(`/applications/${data.application._id}`);
     } catch (err) {
       setError(getErrorMessage(err));
@@ -50,14 +57,17 @@ const ApplicationFormPage = () => {
 
   return (
     <div className="page-stack narrow-page">
-      <Link className="back-link" to={isEditing ? `/applications/${id}` : '/applications'}>
+      <Link
+        className="back-link"
+        to={isEditing ? `/applications/${id}` : "/applications"}
+      >
         <ArrowLeft size={17} />
         Back
       </Link>
       <div className="page-header">
         <div>
-          <span className="eyebrow">{isEditing ? 'Edit' : 'Add'}</span>
-          <h1>{isEditing ? 'Update application' : 'New application'}</h1>
+          <span className="eyebrow">{isEditing ? "Edit" : "Add"}</span>
+          <h1>{isEditing ? "Update application" : "New application"}</h1>
         </div>
       </div>
       {error ? <ErrorState message={error} /> : null}
@@ -65,7 +75,7 @@ const ApplicationFormPage = () => {
         <ApplicationForm
           initialValues={initialValues}
           onSubmit={handleSubmit}
-          submitLabel={isEditing ? 'Update application' : 'Create application'}
+          submitLabel={isEditing ? "Update application" : "Create application"}
           loading={saving}
         />
       </div>
@@ -74,4 +84,3 @@ const ApplicationFormPage = () => {
 };
 
 export default ApplicationFormPage;
-

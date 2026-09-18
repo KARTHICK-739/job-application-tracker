@@ -1,7 +1,8 @@
-import { Eye, Pencil, Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import StatusBadge from './StatusBadge.jsx';
-import { formatDate } from '../utils/formatters.js';
+import React from "react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import StatusBadge from "./StatusBadge.jsx";
+import { formatDate } from "../utils/formatters.js";
 
 const ApplicationTable = ({ applications, onDelete }) => (
   <div className="table-wrap">
@@ -24,7 +25,7 @@ const ApplicationTable = ({ applications, onDelete }) => (
               <strong>{application.company}</strong>
             </td>
             <td>{application.position}</td>
-            <td>{application.location || 'Remote / flexible'}</td>
+            <td>{application.location || "Remote / flexible"}</td>
             <td>
               <StatusBadge status={application.status} />
             </td>
@@ -32,13 +33,26 @@ const ApplicationTable = ({ applications, onDelete }) => (
             <td>{formatDate(application.appliedDate)}</td>
             <td>
               <div className="row-actions">
-                <Link className="icon-button" to={`/applications/${application._id}`} title="View details">
+                <Link
+                  className="icon-button"
+                  to={`/applications/${application._id}`}
+                  title="View details"
+                >
                   <Eye size={17} />
                 </Link>
-                <Link className="icon-button" to={`/applications/${application._id}/edit`} title="Edit application">
+                <Link
+                  className="icon-button"
+                  to={`/applications/${application._id}/edit`}
+                  title="Edit application"
+                >
                   <Pencil size={17} />
                 </Link>
-                <button className="icon-button danger" type="button" onClick={() => onDelete(application)} title="Delete application">
+                <button
+                  className="icon-button danger"
+                  type="button"
+                  onClick={() => onDelete(application)}
+                  title="Delete application"
+                >
                   <Trash2 size={17} />
                 </button>
               </div>
@@ -51,4 +65,3 @@ const ApplicationTable = ({ applications, onDelete }) => (
 );
 
 export default ApplicationTable;
-

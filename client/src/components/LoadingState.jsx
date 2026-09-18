@@ -1,4 +1,5 @@
-const LoadingState = ({ message = 'Loading...' }) => (
+import React from "react";
+const LoadingState = ({ message = "Loading..." }) => (
   <div className="state-panel">
     <div className="spinner" aria-hidden="true" />
     <p>{message}</p>
@@ -6,4 +7,3 @@ const LoadingState = ({ message = 'Loading...' }) => (
 );
 
 export default LoadingState;
-
