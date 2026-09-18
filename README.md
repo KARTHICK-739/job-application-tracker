@@ -116,21 +116,13 @@ The app uses MongoDB through Mongoose. Collections are created automatically whe
 
 Passwords are hashed with bcryptjs. JWTs expire after seven days. The frontend redirects unauthenticated users away from private pages and clears invalid sessions on unauthorized API responses.
 
-## Screenshots
 
-Add screenshots after running the app locally or deploying it.
 
-## Live Demo
 
-Add deployed frontend URL here.
+
+## Live Demo -https://job-application-tracker-five-lake.vercel.app/
 
 ## GitHub Repository
 
-Add repository URL here.
+https://github.com/KARTHICK-739/job-application-tracker
 
-## Future Improvements
-
-- Add automated backend integration tests
-- Add CSV export
-- Add reminder dates and notifications
-- Add activity timeline per application
